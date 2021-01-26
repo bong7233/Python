@@ -1,2 +1,2 @@
-# work-alone
-additional homework
+# About Python
+Keep studing...
