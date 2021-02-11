@@ -1,2 +1,2 @@
 # About Python
-Keep studing...
+upload for studying in subway by phone
