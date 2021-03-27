@@ -122,3 +122,31 @@ print(l, id(l))
 print(m, id(m))
 
 ##############################################
+
+# sort   vs   sorted
+# reverse, key=len, key=str.lower, key=func ...
+
+# sorted : 정렬 후 새로운 객체 반환 , 원본을 수정하지않음
+f_list = ['orange', 'apple', 'mango', 'papaya', 'lemon', 'strawberry', 'coconut']
+
+print('sorted', sorted(f_list)) # 알파벳 오름차순
+print('sorted', sorted(f_list), reverse=True) # 알파벳 역순
+print('sorted', sorted(f_list), key=len) # 글자 길이순으로 정렬
+print('sorted', sorted(f_list), key=labmda x: x[-1])) # 마지막글자를 기준으로 정렬) 
+print('sorted', sorted(f_list), key=labmda x: x[-1], reverse=True)) # 마지막글자를 기준으로 역순정렬) 
+
+print(f_list) # 본체는 위의 과정이 다끝나고 그대로유지됨
+
+
+# sort : 정렬 후 객체 원본을 변경, 반환하지않음을 기억하자 프린트하면 None 나옴
+print('sort', f_list.sort(), f_list) # sort None 바뀐원본
+print('sort', f_list.sort(reverse=True), f_list) 
+print('sort', f_list.sort(key=len), f_list) 
+print('sort', f_list.sort(key=lambda x: x[-1]), f_list) 
+print('sort', f_list.sort(key=lambda x: x[-1], reverse=True), f_list) 
+# 전부 원본을 변경시킴
+
+
+# 그래서 lsit, Array 의 적합한 사용법은?
+# 리스트 기반 : 융통성, 다양한 자료형, 범용적사용
+# 숫자 기반 : array사용(리스트와 거의 호환됨)
