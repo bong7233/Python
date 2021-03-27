@@ -150,3 +150,54 @@ print('sort', f_list.sort(key=lambda x: x[-1], reverse=True), f_list)
 # 그래서 lsit, Array 의 적합한 사용법은?
 # 리스트 기반 : 융통성, 다양한 자료형, 범용적사용
 # 숫자 기반 : array사용(리스트와 거의 호환됨)
+
+#############################################
+
+# 해시테이블
+# key에 Value를 저장하는 구조(파이썬자체가 강력한 해시테이블엔진으로 이뤄짐)
+# 그렇기때문에 key가 중복되지 않아 key를 알면 쉽게 value에 직접접근이가능
+# 파이썬에서 dictionary 타입이 hashtable의 예라고 보면됨
+# key 값을 해싱 함수를통해 해시주소값이 나오고 이걸로 value를 참조
+
+print(__builtins__.__dict__) # 해보면 모든값들이 key:value 형태로 되있음을 알 수 있음
+
+
+# Hash 값 확인
+t1 = (10,20,(30,40,50))
+t2 = (10,20,[30,40,50])
+
+print(hash(t1)) # hash값 나옴(참조값, 식별자같은느낌)
+print(hash(t2)) # 에러발생-> list는 가변성이므로 hash값 안됨
+# 즉 hash값은 불변형에 한해 가능하다
+
+
+# Dict Setdefault 예제 (Setdefault는 공식적으로 매우 추천됨)
+source = (('k1', 'val1') # 2중튜플
+         ('k1', 'val2')
+         ('k2', 'val3')
+         ('k2', 'val4')
+         ('k2', 'val5'))
+
+new=dict1 = {}
+new=dict2 = {}
+
+# Setdefault 미사용
+# 결과는 딕셔너리형태로 나옴
+for k,v in source:
+    if k in new_dict1:
+        new_dict1[k].append(v)
+    else:
+        new_dict1[k] = [v]
+
+# {'k1':['val1','val2'],'k2':'['val3','val4','val5']}
+
+# Setdefault 사용
+for k, v in source:
+    new_dict2.setdefault(k, []).append(v)
+
+# 결과는 똑같이 딕셔너리형태로나옴, 간단
+
+
+# 주의사항
+new_dict3 = {k:v for k,v in source}
+# 이렇게하면 value 값을 나중껄로 덮어씌워버림...
