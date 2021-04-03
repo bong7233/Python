@@ -201,3 +201,8 @@ for k, v in source:
 # 주의사항
 new_dict3 = {k:v for k,v in source}
 # 이렇게하면 value 값을 나중껄로 덮어씌워버림...
+
+###########################################
+
+# sequence 4
+
