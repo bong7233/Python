@@ -130,10 +130,10 @@ print(m, id(m))
 f_list = ['orange', 'apple', 'mango', 'papaya', 'lemon', 'strawberry', 'coconut']
 
 print('sorted', sorted(f_list)) # 알파벳 오름차순
-print('sorted', sorted(f_list), reverse=True) # 알파벳 역순
-print('sorted', sorted(f_list), key=len) # 글자 길이순으로 정렬
-print('sorted', sorted(f_list), key=labmda x: x[-1])) # 마지막글자를 기준으로 정렬) 
-print('sorted', sorted(f_list), key=labmda x: x[-1], reverse=True)) # 마지막글자를 기준으로 역순정렬) 
+print('sorted', sorted(f_list, reverse=True)) # 알파벳 역순
+print('sorted', sorted(f_list, key=len)) # 글자 길이순으로 정렬
+print('sorted', sorted(f_list, key=lambda x : x[-1])) # 마지막글자를 기준으로 정렬) 
+print('sorted', sorted(f_list, key=lambda x : x[-1], reverse=True)) # 마지막글자를 기준으로 역순정렬) 
 
 print(f_list) # 본체는 위의 과정이 다끝나고 그대로유지됨
 
@@ -167,19 +167,19 @@ t1 = (10,20,(30,40,50))
 t2 = (10,20,[30,40,50])
 
 print(hash(t1)) # hash값 나옴(참조값, 식별자같은느낌)
-print(hash(t2)) # 에러발생-> list는 가변성이므로 hash값 안됨
+#print(hash(t2)) # 에러발생-> list는 가변성이므로 hash값 안됨
 # 즉 hash값은 불변형에 한해 가능하다
 
 
 # Dict Setdefault 예제 (Setdefault는 공식적으로 매우 추천됨)
-source = (('k1', 'val1') # 2중튜플
-         ('k1', 'val2')
-         ('k2', 'val3')
-         ('k2', 'val4')
+source = (('k1', 'val1'), # 2중튜플
+         ('k1', 'val2'),
+         ('k2', 'val3'),
+         ('k2', 'val4'),
          ('k2', 'val5'))
 
-new=dict1 = {}
-new=dict2 = {}
+new_dict1 = {}
+new_dict2 = {}
 
 # Setdefault 미사용
 # 결과는 딕셔너리형태로 나옴
