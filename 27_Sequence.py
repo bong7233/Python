@@ -194,37 +194,47 @@ print('sort', f_list.sort(key=lambda x: x[-1], reverse=True), f_list)
 
 # 해시테이블
 # key에 Value를 저장하는 구조(파이썬자체가 강력한 해시테이블엔진으로 이뤄짐)
-# 그렇기때문에 key가 중복되지 않아 key를 알면 쉽게 value에 직접접근이가능
+# key가 중복되지 X, key를 알면 쉽게 value에 직접접근이가능
+# Hash 값이 중복되었을떄 어떤 메커니즘으로 처리되는가? 를 정리해두기 (중요)
 # 파이썬에서 dictionary 타입이 hashtable의 예라고 보면됨
-# key 값을 해싱 함수를통해 해시주소값이 나오고 이걸로 value를 참조
+## key값의 연산결과에따라 직접 value에 접근이 가능한 구조
+# key 값을 해싱 함수를통해 -> 해시주소값이 나오고 -> 이걸로 value의 위치를 참조
 
-print(__builtins__.__dict__) # 해보면 모든값들이 key:value 형태로 되있음을 알 수 있음
+# 모든값들이 key:value 형태로 되있음을 알 수 있음
+print(__builtins__.__dict__)
+# {'name: ~~', 'isinstance:~~'} 형태
 
 
-# Hash 값 확인
+# Hash 값 확인, "값을 확인할수있다?-> 고유한값이다" 를 기억
 t1 = (10,20,(30,40,50))
 t2 = (10,20,[30,40,50])
 
-print(hash(t1)) # hash값 나옴(참조값, 식별자같은느낌)
-#print(hash(t2)) # 에러발생-> list는 가변성이므로 hash값 안됨
+print(hash(t1)) # hash값 나옴, tuple은 불변성이므로 hash값이 변하지 않아서 가능
+# (참조값, 식별자같은느낌)
+
+print(hash(t2)) # 에러발생-> list는 가변성이므로 hash값이 변할수 있어서 안됨
 # 즉 hash값은 불변형에 한해 가능하다
 
 
 # Dict Setdefault 예제 (Setdefault는 공식적으로 매우 추천됨)
+# 대용량 데이터를 다룰때 속도도 빠름
 source = (('k1', 'val1'), # 2중튜플
-         ('k1', 'val2'),
-         ('k2', 'val3'),
+         ('k1', 'val2'),  # 지금은 딕셔너리가 아닌 그냥 튜플
+         ('k2', 'val3'),  # 만약 이대로 그냥사용하면 k1,k2 키값이 중복
          ('k2', 'val4'),
          ('k2', 'val5'))
 
 new_dict1 = {}
 new_dict2 = {}
 
-# Setdefault 미사용
+# Setdefault 미사용시
 # 결과는 딕셔너리형태로 나옴
 for k,v in source:
+    # 딕셔너리안에 키가있는지 확인
     if k in new_dict1:
+        # 키가 있다면 v를 담아줌
         new_dict1[k].append(v)
+    # 키가 없다면 새로운키 만들고 담음
     else:
         new_dict1[k] = [v]
 
@@ -233,12 +243,15 @@ for k,v in source:
 # Setdefault 사용
 for k, v in source:
     new_dict2.setdefault(k, []).append(v)
+# {'k1':['val1','val2'],'k2':'['val3','val4','val5']}
+# 결과는 똑같이 딕셔너리형태로나옴, 훨씬 간결하고 빠름
 
-# 결과는 똑같이 딕셔너리형태로나옴, 간단
 
-
-# 주의사항
+### 주의사항 ###
 new_dict3 = {k:v for k,v in source}
+# # {'k1':'val2','k2':'val5'}
 # 이렇게하면 value 값을 나중껄로 덮어씌워버림...
 
 ###########################################
+
+# Set 선언시 최적화 방법
