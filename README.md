@@ -1,2 +1,1 @@
-# About Python
-upload for studying in subway by phone
+파이썬 복습용 정리노트
