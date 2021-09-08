@@ -192,7 +192,7 @@ print('sort', f_list.sort(key=lambda x: x[-1], reverse=True), f_list)
 
 #############################################
 
-# 해시테이블
+# 해시테이블 (적은 리소스로 많은 데이터를 효율적으로 관리)
 # key에 Value를 저장하는 구조(파이썬자체가 강력한 해시테이블엔진으로 이뤄짐)
 # key가 중복되지 X, key를 알면 쉽게 value에 직접접근이가능
 # Hash 값이 중복되었을떄 어떤 메커니즘으로 처리되는가? 를 정리해두기 (중요)
@@ -212,7 +212,7 @@ t2 = (10,20,[30,40,50])
 print(hash(t1)) # hash값 나옴, tuple은 불변성이므로 hash값이 변하지 않아서 가능
 # (참조값, 식별자같은느낌)
 
-print(hash(t2)) # 에러발생-> list는 가변성이므로 hash값이 변할수 있어서 안됨
+#print(hash(t2)) # 에러발생-> list는 가변성이므로 hash값이 변할수 있어서 안됨
 # 즉 hash값은 불변형에 한해 가능하다
 
 
@@ -254,4 +254,44 @@ new_dict3 = {k:v for k,v in source}
 
 ###########################################
 
-# Set 선언시 최적화 방법
+# Dict 및 Set 심화
+
+# Immutable dict
+
+from types import MappingProxyType
+
+d = {'key1':'value1'}
+
+# Read Only
+d_frozen = MappingProxyType(d) # 읽기전용은 일반적으로 _frozen을 붙여서 명명
+print(d, id(d))
+print(d_frozen, id(d_frozen))
+
+# 수정불가능, 읽기전용이므로
+# d_frozen['key2'] = 'value2'
+
+# 수정가능
+d['key2'] = 'value2'
+print(d)
+
+s1 = {'Apple','Orange', 'Apple', 'Orange', 'Kiwi'}
+s2 = set(['Apple','Orange', 'Apple', 'Orange', 'Kiwi'])
+se = {3}
+s4 = set()
+# frozenset() 으로 쉽게 읽기전용으로 변환가능
+s5 = frozenset({'Apple','Orange', 'Apple', 'Orange', 'Kiwi'})
+
+print(s1) # 중복값은 제거됨을 기억
+# s5.add('Melon') -> frozen이므로 추가 불가
+
+# 선언최적화
+# 바이트코드 -> 파이썬 인터프리터 실행
+from dis import dis
+
+# dis() 로 set을 선언하는 과정을 살펴보면 그냥 {}로 선언하는것이 better
+print(dis('{10}')) # 과정이 3단계
+print(dis('set([10])')) # 과정이 5단계
+
+# 지능형집합 (Comprehending Set)
+from unicodedata import name
+print({name(chr(i),'') for i in range(0,256)}) # name 함수로 없는값 ''처리
